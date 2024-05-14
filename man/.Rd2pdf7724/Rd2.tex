@@ -1,0 +1,108 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\makeatletter\@ifl@t@r\fmtversion{2018/04/01}{}{\usepackage[utf8]{inputenc}}\makeatother
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge \R{} documentation}} \par\bigskip{{\Large of \file{pastaPlot.Rd}}}
+\par\bigskip{\large \today}
+\end{center}
+\HeaderA{pastaPlot}{Spaghetti plot fixed and random effects of linear mixed models}{pastaPlot}
+%
+\begin{Description}
+\code{pastaPlot()} plots slopes for both fixed and random effects of linear mixed models from lme4 or glmmTMB packages as a single spaghetti plot, optionally between conditions including confidence bands for fixed effects.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pastaPlot(
+  model = NULL,
+  predictor = NULL,
+  nested.in = NULL,
+  group = NULL,
+  legend.title = "Legend",
+  group.labels = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  font.family = NULL,
+  colors = NULL,
+  ci.lvl = 0.95,
+  ci.int = FALSE,
+  ci.linetype = 0,
+  lwd.fix = 1,
+  lwd.ran = 0.5,
+  xlab.inc = 0,
+  xlab.int = NULL,
+  ylim = NULL,
+  opacity.ci = 0.25,
+  opacity.ran = 0.3,
+  colors.ci = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{model}] lme4 or glmmTMB model object
+
+\item[\code{predictor}] (Character) Name of predictor (e.g., "time" or "math\_score"), as it is present in the model
+
+\item[\code{nested.in}] (Character) Name of the variable your time points or subjects are nested in (e.g.,"school" or "id")
+
+\item[\code{group}] (Optional, character) The name of your grouping variable (e.g., "condition" or "gender")
+
+\item[\code{legend.title}] (Optional, character) Name of legend in plot (e.g., "Condition", or "Gender")
+
+\item[\code{group.labels}] (Optional, vector of characters) Names of group labels to be displayed in the plot (e.g., c("Control", "Intervention"))
+
+\item[\code{xlab}] (Optional, character) Label of x-axis (predictor) (e.g., "Time (days)")
+
+\item[\code{ylab}] (Optional, character) Label of y-axis (dependant variable) (e.g., "GAF")
+
+\item[\code{font.family}] (Optional, character) Name of the font family (e.g. "serif")
+
+\item[\code{colors}] (Optional, vector of characters) Set color of slopes. Length of vector should correspond to number of values in group variable (e.g., c("\#5e9aff", "blue")). If no group variable is specified, pass a single color.
+
+\item[\code{ci.lvl}] (Optional, numeric) Set confidence interval (default: 0.95)
+
+\item[\code{ci.int}] (Optional, logical) Enable confidence (prediction) intervals, disabled by default
+
+\item[\code{ci.linetype}] (Optional, numeric) Set linetype of confidence bands outline (default: 0)
+
+\item[\code{lwd.fix}] (Optional, numeric) Line width of fixed effects (default: 1)
+
+\item[\code{lwd.ran}] (Optional, numeric) Line width of random effects (default: 0.5)
+
+\item[\code{xlab.inc}] (Optional, numeric) Increment the displayed values of your predictor (e.g., xlab\_int = 1 changes range of x from 0-29 to 1-30), set to 0 by default
+
+\item[\code{xlab.int}] (Optional, numeric) Interval between displayed predictor values on x-axis (e.g., "1"), disabled by default
+
+\item[\code{ylim}] (Optional, numeric vector) Limited range of values on y-axis (e.g. c(1,5.5))
+
+\item[\code{opacity.ci}] (Optional, numeric) Set opacity of confidence bands in the range of 0 to 1 (default = 0.1)
+
+\item[\code{opacity.ran}] (Optional, numeric) Set opacity of random slopes in the range of 0 to 1 (default = 0.4)
+
+\item[\code{colors.ci}] (Optional, vector of characters) Set color of confidence bands. Length of vector should correspond to number of values in group variable (e.g., c("\#5e9aff", "blue")). If no group variable is specified, pass a single color.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a ggplot2 plot object to further be modified
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+lme4_model <- lme4::lmer(CO2 ~ 1 + time*condition + (1 + time | id), data=ecovia_data, REML = FALSE)
+pastaPlot(lme4_model, "time", "id", group = "condition", legend.title = "Condition", group.labels = c("Control", "Intervention"), ci.int = TRUE, xlab = "Time (days)", ylab = "CO2")
+
+glmmTMB_model <- glmmTMB::glmmTMB(math_score_y3 ~ 1 + math_score_y1*gender + (1 + math_score_y1 | school), data=jsp_data, REML = FALSE)
+pastaPlot(glmmTMB_model, "math_score_y1", "school", group = "gender", legend.title = "Gender", group.labels = c("Male", "Female"), ci.int = FALSE, xlab = "Math score (year 1)", ylab = "Math score (year 3)")
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}

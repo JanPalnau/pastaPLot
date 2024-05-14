@@ -1,10 +1,10 @@
 Package: pastaPlot
 Type: Package
-Title: Creates spaghetti plot of fixed and random effects in linear mixed models (lme4 and glmmTMB)
+Title: Creates Spaghetti Plot of Fixed and Random Effects in Linear Mixed Models (Lme4 and glmmTMB)
 Version: 0.1.0
 Author: Jan-Felix Palnau
 Maintainer: The package maintainer <jan.palnau@mailbox.org>
-Description: pastaPlot plots both fixed and random effects of linear mixed models, multilevel models in a single spaghetti plot. It allows to visualize the effect of a predictor on a criterion between different levels of a grouping variable. Additionally, confidence intervals can be displayed for fixed effects.
+Description: Plot both fixed and random effects of linear mixed models, multilevel models in a single spaghetti plot. The package allows to visualize the effect of a predictor on a criterion between different levels of a grouping variable. Additionally, confidence intervals can be displayed for fixed effects.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
