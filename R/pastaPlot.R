@@ -59,23 +59,29 @@ pastaPlot <- function(model = NULL,
 
   # create data frames for fixed and random effects
   cookedPasta <- cookPasta(model = model, predictor = predictor, nested.in = nested.in, group = group, ci.int = ci.int, ci.lvl = ci.lvl)
+  fix.ef <- cookedPasta[[1]]
+  rand.ef <- cookedPasta[[2]]
   group.exists <- !(is.null(group))
   colors.exist <- !(is.null(colors))
   colors.ci.exist <- !(is.null(colors.ci))
   ngroups <- nrow(unique(cookedPasta[[1]]["group"]))
 
-  if(is.null(ylab)) ylab <- names(model.frame(model)[1])
+  model_frame <- model.frame(model)
+  range_1 <- range(model_frame[[predictor]])
+  range_2 <- range(model_frame[[group]])
+
+  if(is.null(ylab)) ylab <- names(model_frame[1])
   if(is.null(xlab)) xlab <- predictor
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package 'ggplot2' required for this function to work, please install it.")
   }
   if(length(colors) > ngroups) stop("More colors set than values in grouping variable. Check your colors.")
   if(group.exists) {
-    p1 <- ggplot2::ggplot() + ggplot2::geom_line(data = cookedPasta[[2]], ggplot2::aes(x = predictor, y = pred, group = id, color = factor(group)), lwd = lwd.ran, alpha = opacity.ran)
+    p1 <- ggplot2::ggplot() + ggplot2::geom_line(ggplot2::aes(x = rand.ef$predictor, y = rand.ef$pred, group = rand.ef$id, color = factor(rand.ef$group)), lwd = lwd.ran, alpha = opacity.ran)
     if(ci.int == TRUE) {
-      p1 <- p1 + ggplot2::geom_ribbon(data = cookedPasta[[1]], ggplot2::aes(x = predictor, y = pred, ymin = conf.low, ymax = conf.high, fill = factor(group)), linetype = ci.linetype, alpha = opacity.ci)
+      p1 <- p1 + ggplot2::geom_ribbon(ggplot2::aes(x = fix.ef$predictor, y = fix.ef$pred, ymin = fix.ef$conf.low, ymax = fix.ef$conf.high, fill = factor(fix.ef$group)), linetype = ci.linetype, alpha = opacity.ci)
     }
-    p1 <- p1 + ggplot2::geom_line(data = cookedPasta[[1]], ggplot2::aes(x = predictor, y = pred, color = factor(group)), lwd = lwd.fix)
+    p1 <- p1 + ggplot2::geom_line(ggplot2::aes(x = fix.ef$predictor, y = fix.ef$pred, color = factor(fix.ef$group)), lwd = lwd.fix)
     if(colors.exist){
       if(length(colors) < ngroups) stop("Less colors passed to colors than levels of your grouping variable. Add some color (to your life) or remove the argument to get default colors!")
       p1 <- p1 + ggplot2::scale_color_manual(values = colors, labels = group.labels) +
@@ -98,17 +104,17 @@ pastaPlot <- function(model = NULL,
       }
     }
   } else {
-    p1 <- ggplot2::ggplot() + ggplot2::geom_line(data = cookedPasta[[2]], ggplot2::aes(x = predictor, y = pred, group = id), lwd = lwd.ran, alpha = opacity.ran)
+    p1 <- ggplot2::ggplot() + ggplot2::geom_line(ggplot2::aes(x = rand.ef$predictor, y = rand.ef$pred, group = rand.ef$id), lwd = lwd.ran, alpha = opacity.ran)
     if(ci.int == TRUE) {
-      p1 <- p1 + ggplot2::geom_ribbon(data = cookedPasta[[1]], ggplot2::aes(x = predictor, y = pred, ymin = conf.low, ymax = conf.high), linetype = ci.linetype, alpha = opacity.ci)
+      p1 <- p1 + ggplot2::geom_ribbon(ggplot2::aes(x = fix.ef$predictor, y = fix.ef$pred, ymin = fix.ef$conf.low, ymax = fix.ef$conf.high), linetype = ci.linetype, alpha = opacity.ci)
     }
-    p1 <- p1 + ggplot2::geom_line(data = cookedPasta[[1]], ggplot2::aes(x = predictor, y = pred), lwd = lwd.fix)
+    p1 <- p1 + ggplot2::geom_line(ggplot2::aes(x = fix.ef$predictor, y = fix.ef$pred), lwd = lwd.fix)
     if(colors.exist){
-      p1 <- ggplot2::ggplot() + ggplot2::geom_line(data = cookedPasta[[2]], ggplot2::aes(x = predictor, y = pred, group = id, color = colors), lwd = lwd.ran, alpha = opacity.ran)
+      p1 <- ggplot2::ggplot() + ggplot2::geom_line(ggplot2::aes(x = rand.ef$predictor, y = rand.ef$pred, group = rand.ef$id, color = colors), lwd = lwd.ran, alpha = opacity.ran)
       if(ci.int == TRUE) {
-        p1 <- p1 + ggplot2::geom_ribbon(data = cookedPasta[[1]], ggplot2::aes(x = predictor, y = pred, ymin = conf.low, ymax = conf.high, fill = colors), linetype = ci.linetype, alpha = opacity.ci)
+        p1 <- p1 + ggplot2::geom_ribbon(ggplot2::aes(x = fix.ef$predictor, y = fix.ef$pred, ymin = fix.ef$conf.low, ymax = fix.ef$conf.high, fill = colors), linetype = ci.linetype, alpha = opacity.ci)
       }
-      p1 <- p1 + ggplot2::geom_line(data = cookedPasta[[1]], ggplot2::aes(x = predictor, y = pred, color = colors), lwd = lwd.fix)
+      p1 <- p1 + ggplot2::geom_line(ggplot2::aes(x = fix.ef$predictor, y = fix.ef$pred, color = colors), lwd = lwd.fix)
       p1 <- p1 + ggplot2::scale_color_manual(values = colors, guide = "none")
       if(colors.ci.exist) {
         p1 <- p1 + ggplot2::scale_fill_manual(values = colors.ci, guide = "none")
