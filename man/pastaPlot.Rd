@@ -79,8 +79,13 @@ Returns a ggplot2 plot object to further be modified
 }
 \examples{
 lme4_model <- lme4::lmer(CO2 ~ 1 + time*condition + (1 + time | id), data=ecovia_data, REML = FALSE)
-pastaPlot(lme4_model, "time", "id", group = "condition", legend.title = "Condition", group.labels = c("Control", "Intervention"), ci.int = TRUE, xlab = "Time (days)", ylab = "CO2")
+pastaPlot(lme4_model, "time", "id", group = "condition", legend.title = "Condition",
+group.labels = c("Control", "Intervention"), ci.int = TRUE, xlab = "Time (days)",
+ylab = "CO2")
 
-glmmTMB_model <- glmmTMB::glmmTMB(math_score_y3 ~ 1 + math_score_y1*gender + (1 + math_score_y1 | school), data=jsp_data, REML = FALSE)
-pastaPlot(glmmTMB_model, "math_score_y1", "school", group = "gender", legend.title = "Gender", group.labels = c("Male", "Female"), ci.int = FALSE, xlab = "Math score (year 1)", ylab = "Math score (year 3)")
+glmmTMB_model <- glmmTMB::glmmTMB(math_score_y3 ~ 1 + math_score_y1*gender +
+(1 + math_score_y1 | school), data=jsp_data, REML = FALSE)
+pastaPlot(glmmTMB_model, "math_score_y1", "school", group = "gender",
+legend.title = "Gender", group.labels = c("Male", "Female"), ci.int = FALSE,
+xlab = "Math score (year 1)", ylab = "Math score (year 3)")
 }
