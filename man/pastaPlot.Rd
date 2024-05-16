@@ -2,7 +2,7 @@
 % Please edit documentation in R/pastaPlot.R
 \name{pastaPlot}
 \alias{pastaPlot}
-\title{Spaghetti plot fixed and random effects of linear mixed models}
+\title{Plot fixed and random effects of linear mixed models}
 \usage{
 pastaPlot(
   model = NULL,
@@ -75,7 +75,7 @@ pastaPlot(
 Returns a ggplot2 plot object to further be modified
 }
 \description{
-\code{pastaPlot()} plots slopes for both fixed and random effects of linear mixed models from lme4 or glmmTMB packages as a single spaghetti plot, optionally between conditions including confidence bands for fixed effects.
+\code{pastaPlot()} plots slopes for both fixed and random effects of linear mixed models from 'lme4' or 'glmmTMB' packages as a single spaghetti plot, optionally between conditions including confidence bands for fixed effects.
 }
 \examples{
 lme4_model <- lme4::lmer(CO2 ~ 1 + time*condition + (1 + time | id), data=ecovia_data, REML = FALSE)

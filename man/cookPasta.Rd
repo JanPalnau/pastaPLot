@@ -26,6 +26,9 @@ cookPasta(
 
 \item{ci.lvl}{(Optional, numeric) Set level of confidence (prediction) intervals (default: 0.95). Requires ci.int to be set to TRUE}
 }
+\value{
+Returns a list of two dataframes, in which the first element is the fixed effects dataframe and the second element the random effects dataframe
+}
 \description{
-\code{cookPasta()} creates dataframes from fixed and random effects of lme4 or glmmTMB models (e.g., for plotting)
+\code{cookPasta()} creates dataframes from fixed and random effects of 'lme4' or 'glmmTMB' models (e.g., for plotting)
 }

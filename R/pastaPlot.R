@@ -1,8 +1,8 @@
-#' @title Spaghetti plot fixed and random effects of linear mixed models
+#' @title Plot fixed and random effects of linear mixed models
 #' @name pastaPlot
 #'
 #' @description
-#'   \code{pastaPlot()} plots slopes for both fixed and random effects of linear mixed models from lme4 or glmmTMB packages as a single spaghetti plot, optionally between conditions including confidence bands for fixed effects.
+#'   \code{pastaPlot()} plots slopes for both fixed and random effects of linear mixed models from 'lme4' or 'glmmTMB' packages as a single spaghetti plot, optionally between conditions including confidence bands for fixed effects.
 #'
 #' @param model lme4 or glmmTMB model object
 #' @param predictor (Character) Name of predictor (e.g., "time" or "math_score"), as it is present in the model

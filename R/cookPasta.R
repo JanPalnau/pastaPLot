@@ -2,7 +2,7 @@
 #' @name cookPasta
 #'
 #' @description
-#'   \code{cookPasta()} creates dataframes from fixed and random effects of lme4 or glmmTMB models (e.g., for plotting)
+#'   \code{cookPasta()} creates dataframes from fixed and random effects of 'lme4' or 'glmmTMB' models (e.g., for plotting)
 #'
 #' @param model lme4 or glmmTMB model object
 #' @param predictor (Character) Name of predictor (e.g., "time" or "math_score"), as it is present in the model
@@ -10,6 +10,7 @@
 #' @param group (Optional, character) The name of your grouping variable (e.g., "condition" or "gender")
 #' @param ci.lvl (Optional, numeric) Set level of confidence (prediction) intervals (default: 0.95). Requires ci.int to be set to TRUE
 #' @param ci.int (Optional, boolean) Enable confidence (prediction) intervals, disabled by default
+#' @return Returns a list of two dataframes, in which the first element is the fixed effects dataframe and the second element the random effects dataframe
 
 cookPasta <- function(model = NULL,
                       predictor = NULL,
