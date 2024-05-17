@@ -2,7 +2,7 @@
 % Please edit documentation in R/cookPasta.R
 \name{cookPasta}
 \alias{cookPasta}
-\title{Spaghetti plot fixed and random effects of linear mixed models}
+\title{Spaghetti-plot fixed and random effects of linear mixed models}
 \usage{
 cookPasta(
   model = NULL,

@@ -1,4 +1,4 @@
-#' @title Spaghetti plot fixed and random effects of linear mixed models
+#' @title Calculate predicted values for fixed and random effects
 #' @name cookPasta
 #'
 #' @description
