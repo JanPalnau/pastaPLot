@@ -6,66 +6,47 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-pastaPlot allows you to plot fixed and random effects of a linear mixel
-model of class ‘lme4’ or ‘glmmTMB’ in a single spaghetti plot. While the
-pastaPlot() returns a ggplot object, most basic customizations can be
-done within the function itself. So feel free to check the documentation
-before further modifying the plot yourself!
-
-Predicted values and confidence intervals of fixed effects are
-calculated using ggpredict() function from
-[ggeffects](https://strengejacke.github.io/ggeffects/reference/ggpredict.html)
-package (Lüdecke, 2018). At this stage, random effects can only be
-plotted for one variable at a time. Here, the cookPasta function
-automatically checks if you specified random vs. fixed intercept and
-slope in your model (e.g., random intercept, random slope “(1 + time \|
-id)”) and plots them accordingly.
+The goal of pastaPlot is to …
 
 ## Installation
 
-As the CRAN submission is pending, at this stage, you can install
-pastaPlot only from [GitHub](https://github.com/):
+You can install the development version of pastaPlot from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("JanPalnau/pastaPlot")
 ```
 
-## Examples
+## Example
 
-### ‘lme4’
-
-Here is an example passing a lme4 model object based on longitudinal
-data:
+This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(pastaPlot)
-
-data("ecovia_data")
-lme4_model <- lme4::lmer(CO2 ~ 1 + time*condition + (1 + time | id), data=ecovia_data, REML = FALSE)
-#> Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-#> Model failed to converge with max|grad| = 0.0338028 (tol = 0.002, component 1)
-pastaPlot(lme4_model, "time", "id", group = "condition", legend.title = "Condition",
-group.labels = c("Control", "Intervention"), ci.int = TRUE, xlab = "Time (days)",
-ylab = "CO2")
+## basic example code
 ```
 
-<img src="man/figures/README-lme4_example-1.png" width="100%" />
-
-### ‘glmmTMB’
-
-Plotting of glmmTMB models works in the same fashion:
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
 
 ``` r
-data("jsp_data")
-glmmTMB_model <- glmmTMB::glmmTMB(math_score_y3 ~ 1 + math_score_y1*gender +
-(1 + math_score_y1 | school), data=jsp_data, REML = FALSE)
-pastaPlot(glmmTMB_model, "math_score_y1", "school", group = "gender",
-legend.title = "Gender", group.labels = c("Male", "Female"), ci.int = FALSE,
-xlab = "Math score (year 1)", ylab = "Math score (year 3)")
+summary(cars)
+#>      speed           dist       
+#>  Min.   : 4.0   Min.   :  2.00  
+#>  1st Qu.:12.0   1st Qu.: 26.00  
+#>  Median :15.0   Median : 36.00  
+#>  Mean   :15.4   Mean   : 42.98  
+#>  3rd Qu.:19.0   3rd Qu.: 56.00  
+#>  Max.   :25.0   Max.   :120.00
 ```
 
-<img src="man/figures/README-glmmTMB_example-1.png" width="100%" />
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this.
 
-If you have any questions, encounter errors, or miss some features, feel
-free to contact me: <jan.palnau@mailbox.org>
+You can also embed plots, for example:
+
+<img src="man/figures/README-pressure-1.png" width="100%" />
+
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.
