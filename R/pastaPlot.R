@@ -28,7 +28,7 @@
 #' @return Returns a ggplot2 plot object to further be modified
 #' @export
 #'
-#' @examples lme4_model <- lme4::lmer(CO2 ~ 1 + time*condition + (1 + time | id), data=ecovia_data, REML = FALSE)
+#' @examples lme4_model <- lme4::lmer(CO2 ~ 1 + time*condition + (1 + time | id), data=ecovia_data, REML = FALSE, control = lme4::lmerControl(optimizer = "bobyqa"))
 #' @examples pastaPlot(lme4_model, "time", "id", group = "condition", legend.title = "Condition",
 #' group.labels = c("Control", "Intervention"), ci.int = TRUE, xlab = "Time (days)",
 #' ylab = "CO2")
